@@ -40,6 +40,40 @@
               </p>
             @enderror
           </div>
+
+          <div class="mb-3">
+            <label for="category" class="form-label">Category</label>
+            <select name="category_id" id="category_id" class="form-control" aria-label="Default select example">
+              <option value="">Select category</option>
+              @foreach ($categories as $category)
+                <option 
+                  @if ($category->id == old('category_id', $post->category_id)) selected @endif 
+                  value="{{ $category->id }}">
+                    {{ $category->name }}
+                </option>
+              @endforeach             
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <h6>Tags</h6>
+            @foreach ($tags as $tag)
+              <span class="mr-3">
+                <input type="checkbox" 
+                  name="tags[]" 
+                  value="{{ $tag->id }}"
+                  id="tag{{ $loop->iteration }}"
+                  @if (!$errors->any() && $post->tags->contains($tag->id))
+                        checked
+                  @elseif (!$errors->any() && in_array($tag->id, old('tags', [])))
+                        checked
+                  @endif
+                  >
+                <label for="tag{{ $loop->iteration }}">{{ $tag->name }}</label>
+              </span>
+            @endforeach
+          </div>
+
           <button type="submit" class="btn btn-primary">Invia</button>
     </form>
 </div>

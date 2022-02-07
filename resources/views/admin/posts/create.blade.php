@@ -63,7 +63,6 @@
                   value="{{ $tag->id }}"
                   id="tag{{ $loop->iteration }}"
                   @if (in_array($tag->id, old('tags', []))) checked @endif
-                  
                   >
                 <label for="tag{{ $loop->iteration }}">{{ $tag->name }}</label>
               </span>
