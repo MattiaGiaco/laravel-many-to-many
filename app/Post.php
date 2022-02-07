@@ -15,6 +15,9 @@ class Post extends Model
 
     protected $fillable = ['title', 'content', 'slug', 'category_id'];
 
+    public function tags(){
+        return $this->belongsToMany('App\Tag');
+    }
 
     public static function generateSlug($title){
 

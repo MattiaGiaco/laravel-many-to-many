@@ -15,7 +15,9 @@
           <thead>
             <tr>
               <th scope="col">ID</th>
-              <th scope="col">Title</th>
+              <th scope="col">Titolo</th>
+              <th scope="col">Categoria</th>
+              <th scope="col">Tags</th>
               <th scope="col">Azioni</th>
             </tr>
           </thead>
@@ -28,7 +30,14 @@
                   <td>{{ $post->category->name }}</td>
                 @else
                   <td>-</td>
-                @endif               
+                @endif  
+                <td>
+                  @forelse ($post->tags as $tag)
+                    <span class="badge bg-primary">{{ $tag->name }}</span>
+                  @empty
+                    -
+                  @endforelse  
+                </td>             
                 <td><a href="{{ route('admin.post.show', $post) }}" class="btn btn-info">SHOW</a></td>
                 <td><a href="{{ route('admin.post.edit', $post) }}" class="btn btn-success">EDIT</a></td>
                 <td>

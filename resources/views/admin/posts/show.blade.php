@@ -9,11 +9,15 @@
           <h3>Categoria: {{ $post->category->name }}</h3>
         @endif
 
-        <p>
+        @foreach ($post->tags as $tag)
+          <span class="badge bg-primary">{{ $tag->name }}</span>
+        @endforeach
+
+        <p class="mt-5">
           {{ $post->content }}
         </p>     
     </div>
-    <div>
+    <div class="d-flex">
       <a href="{{ route('admin.post.edit', $post) }}" class="btn btn-success mr-3">EDIT</a>
       <form onsubmit="return confirm('Vuoi eliminare {{$post->title}}?')" action="{{route('admin.post.destroy', $post)}}" method="POST">
         @csrf
