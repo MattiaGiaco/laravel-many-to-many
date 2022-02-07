@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Category;
 use App\Http\Controllers\Controller;
 use App\Post;
+use App\Tag;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -31,7 +32,8 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.posts.create', compact('categories'));
+        $tags = Tag::all();
+        return view('admin.posts.create', compact('categories','tags'));
     }
 
     /**
@@ -51,6 +53,10 @@ class PostController extends Controller
         $new_post->fill($data);
         $new_post->slug = Post::generateSlug($new_post->title);
         $new_post->save();
+
+        if (array_key_exists('tags', $data)) {
+            $new_post->tags()->attach($data['tags']);
+        }
 
         return redirect()->route('admin.post.show', $new_post);
     }
